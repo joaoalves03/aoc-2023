@@ -31,7 +31,7 @@ pub fn part_two(input: &str) -> Option<u32> {
 
     for line in input.lines() {
         let caps: Vec<u32> = re.captures_iter(line).map(|x| {
-            let mut val = x.unwrap().get(1).unwrap().as_str();
+            let val = x.unwrap().get(1).unwrap().as_str();
 
             match val {
                 "one" => 1,
