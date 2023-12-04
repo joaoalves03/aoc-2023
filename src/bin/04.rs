@@ -35,6 +35,24 @@ fn get_scratch_cards(input: &str) -> Vec<ScratchCard> {
     scratch_cards
 }
 
+fn get_number_of_cards(i: usize, cards: &Vec<ScratchCard>) -> i32 {
+    let mut number_of_cards = 0;
+
+    for num in &cards.get(i).unwrap().winning_numbers {
+        if cards.get(i).unwrap().numbers.contains(&num) {
+            number_of_cards += 1;
+        }
+    }
+
+    if number_of_cards > 0 {
+        for j in i + 1..i + number_of_cards + 1 {
+            number_of_cards += get_number_of_cards(j, cards) as usize;
+        }
+    }
+
+    number_of_cards as i32
+}
+
 pub fn part_one(input: &str) -> Option<u32> {
     let scratch_cards: Vec<ScratchCard> = get_scratch_cards(input);
     let mut total = 0;
@@ -53,24 +71,6 @@ pub fn part_one(input: &str) -> Option<u32> {
     }
 
     Some(total)
-}
-
-fn get_number_of_cards(i: usize, cards: &Vec<ScratchCard>) -> i32 {
-    let mut number_of_cards = 0;
-
-    for num in &cards.get(i).unwrap().winning_numbers {
-        if cards.get(i).unwrap().numbers.contains(&num) {
-            number_of_cards += 1;
-        }
-    }
-
-    if number_of_cards > 0 {
-        for j in i + 1..i + number_of_cards + 1 {
-            number_of_cards += get_number_of_cards(j, cards) as usize;
-        }
-    }
-
-    number_of_cards as i32
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
